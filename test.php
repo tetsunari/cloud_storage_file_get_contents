@@ -7,26 +7,36 @@ $images = 'file/トランクス.jpg';
 
 $productId = 'lunar-caster-347010';
 
-$auth_key = __DIR__ . 'json_key/lunar-caster-347010-6adb1077a9f6.json';
+$auth_key = __DIR__ . '/json_key/lunar-caster-347010-6adb1077a9f6.json';
 
 $bucket_name = 'matu-test-storage';
 
 $header = ['Content-type: application/json'];
 
-$storage = new StorageClient([
-    'projectId' => $productId,
-    'keyFile' => json_decode(file_get_contents($auth_key, true), true)
-]);
+try {
+    $storage = new StorageClient([
+        'projectId' => $productId,
+        'keyFile' => json_decode(file_get_contents($auth_key, true), true)
+    ]);
+} catch (Exception $e) {
+    echo $e;
+    exit();
+}
 
-$bucket = $storage->bucket($bucket_name);
 
 $option = ['name' => $images];
 
-$fp = fopen("{$images}", 'r');
-$object = $bucket->upload(
-    $fp,
-    $option
-);
+try {
+    $fp = fopen("{$images}", 'r');
+    $bucket = $storage->bucket($bucket_name);
+    $object = $bucket->upload(
+        $fp,
+        $option
+    );
+} catch (Exception $e) {
+    echo $e;
+    exit();
+}
 
 echo gettype($object). PHP_EOL;
 
