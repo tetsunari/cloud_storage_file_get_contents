@@ -13,23 +13,6 @@ $bucket_name = 'matu-test-storage';
 
 $header = ['Content-type: application/json'];
 
-
-//$curl = curl_init();
-//curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
-//curl_setopt($curl, CURLOPT_POSTFIELDS, $auth_key);
-//curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-//
-//$response = curl_exec($curl);
-//$curl_info = curl_getinfo($curl);
-//curl_close($curl);
-
-//if ($curl_info['http_code'] !== 200) return;
-
-//$storage = new StorageClient([
-//    'projectId' => $productId,
-//    'keyFile' => json_decode($response, true)
-//]);
-
 $storage = new StorageClient([
     'projectId' => $productId,
     'keyFile' => json_decode(file_get_contents($auth_key, true), true)
